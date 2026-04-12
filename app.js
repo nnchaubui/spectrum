@@ -214,8 +214,9 @@ async function generateShareImage(scope, round, item, absoluteRootUrl, colorCach
         const authorCfg = cfg.author || {};
         cardFragment.querySelector('.share-subtitle').textContent = `${scope.toUpperCase()} – ${getRoundName(scope, round).toUpperCase()}`;
         const watermarkTemplate = authorCfg.watermark_template || "CHỤP BỞI {author}";
+        const cleanUrl = window.location.origin + window.location.pathname;
         cardFragment.querySelector('.share-watermark-text').textContent = resolveTemplate(watermarkTemplate);
-        cardFragment.querySelector('.share-watermark-url').textContent = window.location.href.replace(/^https?:\/\//, '').replace(/\/$/, '');
+        cardFragment.querySelector('.share-watermark-url').textContent = cleanUrl.replace(/^https?:\/\//, '').replace(/\/$/, '');
         const brandImg = cardFragment.querySelector('.share-brand-icon');
         try {
             const iconRes = await fetch(`${absoluteRootUrl}favicon.svg`);
@@ -384,9 +385,10 @@ function showShareModal(imgBase64, pageUrl, colors, item) {
 async function captureAndProcess(scope, round, item, absoluteRootUrl, colorCache, captureCache, pendingCaptures, getRoundName) {
     const cacheKey = item.id;
     const imgUrl = `${absoluteRootUrl}assets/${scope}/${round}/${item.id}.png`;
+    const cleanUrl = window.location.origin + window.location.pathname;
     if (captureCache.has(cacheKey)) {
         const cachedColors = colorCache.get(imgUrl)?.colors || [];
-        showShareModal(captureCache.get(cacheKey), window.location.href, cachedColors, item);
+        showShareModal(captureCache.get(cacheKey), cleanUrl, cachedColors, item);
         return;
     }
     const showLoaderWithPulse = (colors)=>{
@@ -408,7 +410,7 @@ async function captureAndProcess(scope, round, item, absoluteRootUrl, colorCache
         renderResult = await generateShareImage(scope, round, item, absoluteRootUrl, colorCache, captureCache, pendingCaptures, getRoundName);
     }
     document.querySelector('.loading-overlay')?.remove();
-    showShareModal(renderResult.img, window.location.href, renderResult.colors, item);
+    showShareModal(renderResult.img, cleanUrl, renderResult.colors, item);
 }
 class App {
     db = null;
