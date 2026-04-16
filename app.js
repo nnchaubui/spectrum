@@ -531,11 +531,25 @@ class App {
         const pattern = roundsCfg["default"] || "ROUND {n}";
         return pattern.replace("{n}", rStr);
     }
+    getScopeGradient(scope) {
+        const sCfg = this.getScopeConfig(scope);
+        if (!sCfg.palette || sCfg.palette.length === 0) return null;
+        const palette = sCfg.palette;
+        const colors = [
+            ...palette,
+            palette[0]
+        ];
+        return `linear-gradient(90deg, ${colors.join(', ')})`;
+    }
     getGalleryTitle(scope) {
         const sCfg = this.getScopeConfig(scope);
         const prefix = sCfg.gallery_title_prefix || "DNA OF";
         const formattedScope = scope.toUpperCase();
-        return `<span class="title-sub">${prefix}</span><span class="gradient-text">${formattedScope}</span>`;
+        const gradient = this.getScopeGradient(scope);
+        if (gradient) {
+            return `<span class="title-sub">${prefix}</span><span class="gradient-text" style="--scope-gradient: ${gradient}">${formattedScope}</span>`;
+        }
+        return `<span class="title-sub">${prefix}</span><span>${formattedScope}</span>`;
     }
     getCleanTitle(scope) {
         const sCfg = this.getScopeConfig(scope);
@@ -593,20 +607,30 @@ class App {
             link.querySelector('.scope-row-title').textContent = scope.toUpperCase();
             link.querySelector('#meta-rounds').textContent = roundCount.toString();
             link.querySelector('#meta-stages').textContent = totalStages.toString();
-            const firstItem = scopeData[0]?.[0];
-            if (firstItem) {
-                const imgUrl = `${this.absoluteRootUrl}assets/${scope}/0/${firstItem.id}.png`;
-                const canvas = link.querySelector('.card-bg');
-                sampleColors(imgUrl, this.colorCache).then((data)=>{
-                    if (isLowPower) {
-                        link.style.backgroundColor = data.baseColor;
-                        canvas.remove();
-                    } else {
-                        const animator = new CardAnimator(canvas, data.colors, data.baseColor);
-                        this.animators.add(animator);
-                        link.animator = animator;
-                    }
-                });
+            const sCfg = this.getScopeConfig(scope);
+            const canvas = link.querySelector('.card-bg');
+            const applyColors = (colors, baseColor)=>{
+                if (isLowPower) {
+                    link.style.backgroundColor = baseColor;
+                    canvas?.remove();
+                } else if (canvas) {
+                    const animator = new CardAnimator(canvas, colors, baseColor);
+                    this.animators.add(animator);
+                    link.animator = animator;
+                }
+            };
+            if (sCfg.palette && sCfg.palette.length > 0) {
+                const colors = sCfg.palette.slice(0, 3);
+                const baseColor = sCfg.palette[3] || sCfg.palette[0];
+                applyColors(colors, baseColor);
+            } else {
+                const firstItem = scopeData[0]?.[0];
+                if (firstItem) {
+                    const imgUrl = `${this.absoluteRootUrl}assets/${scope}/0/${firstItem.id}.png`;
+                    sampleColors(imgUrl, this.colorCache).then((data)=>{
+                        applyColors(data.colors, data.baseColor);
+                    });
+                }
             }
             link.onclick = (e)=>{
                 e.preventDefault();

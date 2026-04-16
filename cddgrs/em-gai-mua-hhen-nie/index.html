@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>EM GÁI MƯA - H'HEN NIÊ - Stage DNA | Phòng màu mè Dê1</title>
+	<meta name="description" content="DNA của EM GÁI MƯA - H'HEN NIÊ tại CDDGRS.">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Barlow:wght@600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap"
+		rel="stylesheet">
+	<base href="/spectrum/">
+	<link rel="icon" type="image/svg+xml" href="/spectrum/favicon.svg">
+	<link rel="stylesheet" href="/spectrum/style.css">
+	<script>window.ROOT_DIR = "/spectrum/";</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+	<!-- Open Graph / Social Media Preview -->
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://nnchaubui.github.io/spectrum/cddgrs/em-gai-mua-hhen-nie/">
+	<meta property="og:title" content="EM GÁI MƯA - H'HEN NIÊ - Stage DNA | Phòng màu mè Dê1">
+	<meta property="og:description" content="DNA của EM GÁI MƯA - H'HEN NIÊ tại CDDGRS.">
+	<meta property="og:image" content="https://nnchaubui.github.io/spectrum/assets/cddgrs/5/em-gai-mua-hhen-nie.png">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="630">
+
+	<!-- Twitter -->
+	<meta property="twitter:card" content="summary_large_image">
+	<meta property="twitter:url" content="https://nnchaubui.github.io/spectrum/cddgrs/em-gai-mua-hhen-nie/">
+	<meta property="twitter:title" content="EM GÁI MƯA - H'HEN NIÊ - Stage DNA | Phòng màu mè Dê1">
+	<meta property="twitter:description" content="DNA của EM GÁI MƯA - H'HEN NIÊ tại CDDGRS.">
+	<meta property="twitter:image" content="https://nnchaubui.github.io/spectrum/assets/cddgrs/5/em-gai-mua-hhen-nie.png">
+<script>window.APP_CONFIG = {"author": {"name": "Phòng màu mè Dê1", "watermark_template": "Chụp tại {author}"}, "site": {"title": "{author}", "description": "Nơi lưu trữ DNA màu sắc từ các sân khấu trình diễn.", "home": {"hero_label": "Chào mừng bạn đến với", "slogan": "Cứ mỗi chương trình ra lò là mình lại đem đi \"ép\" lấy DNA màu để cất vào đây. Tuy kho hàng hiện tại còn hơi ít mẫu dùng thử, nhưng tin mình đi, sẽ có ngày căn phòng này đầy ắp màu sắc cho bạn nhìn hoa mắt thì thôi!"}, "visual_dna_label": "DNA của", "title_template": "{title} - Stage DNA | {author}", "song_desc_template": "{visual_dna_label} {title} tại {scope}."}, "ui": {"share": {"scale": 2, "canvas_bg": "#000000", "download_filename_prefix": "dna-{stage}", "error_message": "Trình duyệt không hỗ trợ chia sẻ trực tiếp. Hãy tải ảnh về máy!", "native_share_title": "DNA của {stageTitle}", "native_share_text": "Xem thử cái này coi!"}}, "scopes": {"default": {"gallery_title_prefix": "Bộ sưu tập DNA của", "slogan": "Bộ sưu tập dải màu theo từng vòng công diễn.", "rounds": {"default": "Round {n}"}}, "atvncg": {"slogan": "Vươn đôi tay để cho đam mê bốc cháy dưới ánh Mặt Trời", "rounds": {"0": "Vòng Concert", "6": "Chung kết", "default": "Công diễn {n}"}, "palette": ["#6c1f4e", "#c75633", "#d9a04a", "#2f1b4c"]}, "cddg": {"slogan": "Tôi yêu phụ nữ", "rounds": {"0": "Vòng solo", "6": "Chung kết", "default": "Công diễn {n}"}, "palette": ["#33d6d0", "#a4f2f0", "#d4b48d", "#f4978e"]}, "cddgrs": {"slogan": "Hãy bước về phía có bình minh đầy nắng", "rounds": {"0": "Vòng solo", "6": "Chung kết", "default": "Công diễn {n}"}, "palette": ["#6c2e9c", "#d81e5b", "#f4a261", "#1b4965"]}}};</script>
+</head>
+
+<body class="bg-main">
+	<div id="app"></div>
+
+	<!-- UI Templates Injected Dynamically by SSG -->
+	<template id="tpl-card">
+	<a class="card glass">
+		<canvas class="card-bg"></canvas>
+		<div class="card-header">
+			<h2 class="card-title"></h2>
+		</div>
+		<div class="card-body">
+			<div class="card-image-wrap">
+				<img src="" alt="" loading="lazy">
+				<span class="watermark"></span>
+			</div>
+		</div>
+		<div class="card-footer">
+			<span class="card-scope-round"></span>
+		</div>
+	</a>
+</template>
+
+
+<template id="tpl-detail">
+	<div class="detail-page">
+
+		<nav class="detail-nav-bar">
+			<a href="#" class="back-btn" title="Trang chủ">
+				<svg class="icon" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+			</a>
+		</nav>
+
+		<header class="detail-header">
+			<p class="detail-label">DNA của</p>
+			<h1 class="detail-title"></h1>
+			<p class="detail-round"></p>
+		</header>
+
+		<footer class="detail-action-bar">
+			<a id="yt-link" href="#" target="_blank" class="yt-link">
+				<span class="yt-icon">
+					<svg class="icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+				</span>
+				<span class="btn-text">Xem trên YouTube</span>
+			</a>
+			<div class="action-icons">
+				<button id="download-btn" title="Tải về">
+					<svg class="icon" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+					<span class="btn-text">Tải về</span>
+				</button>
+				<button id="share-btn" title="Chia sẻ">
+					<svg class="icon" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92z"/></svg>
+					<span class="btn-text">Chia sẻ</span>
+				</button>
+			</div>
+		</footer>
+
+		<div class="detail-palette-wrap">
+			<img id="palette-img" src="" alt="Song Palette DNA">
+			<div class="palette-magnifier" id="palette-magnifier"></div>
+		</div>
+	</div>
+</template>
+
+
+<template id="tpl-gallery">
+	<div class="container">
+		<div class="hero">
+			<h1 id="gallery-title"></h1>
+			<p>Cứ mỗi chương trình ra lò là mình lại đem đi "ép" lấy DNA màu để cất vào đây. Tuy kho hàng hiện tại còn hơi ít mẫu dùng thử, nhưng tin mình đi, sẽ có ngày căn phòng này đầy ắp màu sắc cho bạn nhìn hoa mắt thì thôi!</p>
+		</div>
+		<div id="gallery-content"></div>
+	</div>
+</template>
+
+
+<template id="tpl-home">
+	<div class="home-page">
+		<section class="home-hero-vibrant">
+			<div class="hero-visuals">
+				<canvas id="hero-canvas" class="card-bg"></canvas>
+			</div>
+			<div class="hero-content">
+				<div class="hero-label">Chào mừng bạn đến với</div>
+				<h1>EM GÁI MƯA - H'HEN NIÊ - Stage DNA | Phòng màu mè Dê1</h1>
+				<p>Cứ mỗi chương trình ra lò là mình lại đem đi "ép" lấy DNA màu để cất vào đây. Tuy kho hàng hiện tại còn hơi ít mẫu dùng thử, nhưng tin mình đi, sẽ có ngày căn phòng này đầy ắp màu sắc cho bạn nhìn hoa mắt thì thôi!</p>
+			</div>
+		</section>
+		<div class="container">
+			<div id="scope-list" class="scope-list"></div>
+		</div>
+	</div>
+</template>
+
+
+<template id="tpl-loading-overlay">
+	<div class="loading-overlay">
+		<div class="loader-content">
+			<div class="loader-dna"></div>
+			<p class="loader-text">Đang giải mã DNA...</p>
+		</div>
+	</div>
+</template>
+
+
+<template id="tpl-round">
+	<section class="round-section">
+		<div class="round-header">
+			<div class="round-line"></div>
+			<h2 class="round-name"></h2>
+			<div class="round-line"></div>
+		</div>
+		<div class="gallery-grid"></div>
+	</section>
+</template>
+
+
+<template id="tpl-scope-row">
+	<a class="scope-row">
+		<canvas class="card-bg"></canvas>
+		<h2 class="scope-row-title"></h2>
+		<div class="scope-row-meta">
+			<div class="meta-item">
+				<span class="meta-value" id="meta-rounds"></span>
+				<span class="meta-label">vòng</span>
+			</div>
+			<div class="meta-item">
+				<span class="meta-value" id="meta-stages"></span>
+				<span class="meta-label">tiết mục</span>
+			</div>
+		</div>
+	</a>
+</template>
+
+
+<template id="tpl-share-card">
+	<div class="share-card-container">
+		<div class="share-card">
+			<!-- Top: title block matching home card -->
+			<div class="share-card-header">
+				<span class="share-title-top">DNA CỦA</span>
+				<h1 class="share-title"></h1>
+				<h2 class="share-subtitle"></h2>
+			</div>
+			<!-- Center: palette image matching home card body -->
+			<div class="share-card-body">
+				<div class="share-img-wrap">
+					<img class="share-palette" src="" alt="">
+				</div>
+			</div>
+			<!-- Bottom: watermark -->
+			<div class="share-card-footer">
+				<span class="share-watermark-text"></span>
+				<span class="share-watermark-url"></span>
+			</div>
+			<!-- Absolutely positioned branding icon -->
+			<div class="share-brand-wrap">
+				<img class="share-brand-icon" src="" alt="Icon">
+			</div>
+		</div>
+	</div>
+</template>
+
+
+<template id="tpl-share-modal">
+	<div class="modal-overlay acrylic">
+		<div class="modal-content share-modal-box">
+			<div class="modal-header">
+				<h3>Chia sẻ mã DNA này</h3>
+				<button class="close-btn" title="Đóng">
+					<svg class="icon" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div id="preview-image-container"></div>
+			</div>
+			<div class="share-url-box">
+				<input type="text" id="share-url-input" readonly>
+				<button id="copy-url-btn" title="Copy Link">
+					<svg class="icon" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+				</button>
+			</div>
+			<div class="modal-actions-right">
+				<button id="modal-download-btn" title="Tải về">
+					<svg class="icon" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+					<span class="btn-text">Tải về</span>
+				</button>
+				<button id="modal-confirm-share-btn" title="Chia sẻ">
+					<svg class="icon" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92z"/></svg>
+					<span class="btn-text">Chia sẻ</span>
+				</button>
+			</div>
+		</div>
+	</div>
+</template>
+
+
+	<script type="module" src="/spectrum/app.js"></script>
+</body>
+
+</html>

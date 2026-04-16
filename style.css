@@ -145,7 +145,7 @@ header {
 }
 
 .gradient-text {
-	background: linear-gradient(90deg, #6c1f4e, #c75633, #d9a04a, #2f1b4c, #6c1f4e);
+	background: var(--scope-gradient, black);
 	background-size: 200% auto;
 	color: transparent;
 	-webkit-background-clip: text;
