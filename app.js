@@ -659,6 +659,7 @@ class App {
             const grid = roundView.querySelector('.gallery-grid');
             items.forEach((item)=>{
                 const card = getTemplate('tpl-card');
+                if (item.id === 'full') card.classList.add('card-full');
                 const titleEl = card.querySelector('.card-title');
                 titleEl.textContent = item.title;
                 titleEl.style.setProperty('--title-size', getTitleSize(item.title));

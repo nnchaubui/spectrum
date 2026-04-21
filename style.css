@@ -395,6 +395,57 @@ header {
 	text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
 }
 
+/* --- Full Width Card Variant --- */
+.card.card-full {
+	grid-column: 1 / -1;
+	aspect-ratio: unset;
+	height: 420px;
+	padding: 2rem 0;
+}
+
+.card.card-full .card-image-wrap {
+	height: 160px;
+	box-shadow: 0 15px 45px rgba(0, 0, 0, 0.6);
+}
+
+.card.card-full .card-header,
+.card.card-full .card-footer {
+	padding: 1.5rem 6cqw; /* Cố định chiều cao padding để không chiếm chỗ của ảnh */
+}
+
+.card.card-full .card-body {
+	padding: 0 1.5cqw;
+	flex-grow: 1;
+}
+
+.card.card-full .card-title {
+	font-size: clamp(2rem, 4cqw, 3.5rem);
+	line-height: 1.1;
+}
+
+.card.card-full .card-scope-round {
+	font-size: 1.2rem;
+	letter-spacing: 0.3em;
+}
+
+@media (max-width: 800px) {
+	.card.card-full {
+		height: auto;
+		aspect-ratio: 1 / 1;
+		padding: 0;
+	}
+	
+	.card.card-full .card-header,
+	.card.card-full .card-footer,
+	.card.card-full .card-body {
+		padding: 8cqw 6cqw;
+	}
+
+	.card.card-full .card-image-wrap {
+		height: 38cqw;
+	}
+}
+
 .scope-list {
 	display: flex;
 	flex-direction: column;
