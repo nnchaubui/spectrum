@@ -417,7 +417,6 @@ class App {
     scopes = {};
     currentScope = null;
     currentSongId = null;
-    is404 = false;
     colorCache = new Map();
     captureCache = new Map();
     pendingCaptures = new Map();
@@ -491,7 +490,6 @@ class App {
         const parts = path.split('/').filter((p)=>p !== "" && p !== "index.html");
         this.currentScope = null;
         this.currentSongId = null;
-        this.is404 = false;
         if (parts.length > 0) {
             if (this.db && this.db[parts[0]]) {
                 this.currentScope = parts[0];
@@ -499,8 +497,6 @@ class App {
             } else if (parts.length > 1 && this.db && this.db[parts[1]]) {
                 this.currentScope = parts[1];
                 if (parts.length > 2) this.currentSongId = parts[2];
-            } else {
-                this.is404 = true;
             }
         }
     }
@@ -574,9 +570,7 @@ class App {
         appDiv.innerHTML = '';
         this.animators.clear();
         this.currentCards = [];
-        if (this.is404) {
-            this.render404(appDiv);
-        } else if (this.currentSongId && this.currentScope) {
+        if (this.currentSongId && this.currentScope) {
             this.renderDetail(appDiv, this.currentScope, this.currentSongId);
         } else if (this.currentScope) {
             this.renderGallery(appDiv, this.currentScope);
@@ -659,43 +653,6 @@ class App {
         });
         container.appendChild(view);
         this.currentCards = Array.from(document.querySelectorAll('.scope-row'));
-    }
-    render404(container) {
-        const cfg = window.APP_CONFIG || {};
-        const s404 = cfg.site?.["404"] || {};
-        const authorName = cfg.author?.name || "";
-        const cleanTitle = s404.title || "404 Not Found";
-        document.title = `${cleanTitle} | ${authorName}`;
-        const view = getTemplate('tpl-404');
-        const canvas = view.querySelector('#hero-canvas');
-        const heroSection = view.querySelector('.home-hero-vibrant');
-        const brandColors = [
-            '#ffffff',
-            '#9ca3af',
-            '#4b5563',
-            '#1f2937'
-        ];
-        const brandBase = '#000000';
-        if (isLowPower) {
-            heroSection.classList.add('home-hero-static-gradient');
-            canvas?.remove();
-        } else if (canvas) {
-            const animator = new CardAnimator(canvas, brandColors, brandBase);
-            this.animators.add(animator);
-            heroSection.animator = animator;
-        }
-        view.querySelector('#error-404-title').textContent = cleanTitle;
-        view.querySelector('#error-404-slogan').textContent = s404.slogan || "Page not found.";
-        view.querySelector('#error-404-callback').textContent = s404.callback || "Go Home";
-        const callbackLink = view.querySelector('a');
-        callbackLink.href = this.absoluteRootUrl;
-        callbackLink.onclick = (e)=>{
-            e.preventDefault();
-            window.history.pushState({}, '', this.absoluteRootUrl);
-            this.parseRoute();
-            this.render();
-        };
-        container.appendChild(view);
     }
     async renderGallery(container, scope) {
         document.title = this.getCleanTitle(scope);
