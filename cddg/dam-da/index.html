@@ -32,14 +32,49 @@
 	<meta property="twitter:title" content="ĐẬM ĐÀ - Stage DNA | Phòng màu mè Dê1">
 	<meta property="twitter:description" content="DNA của ĐẬM ĐÀ tại CDDG.">
 	<meta property="twitter:image" content="https://nnchaubui.github.io/spectrum/assets/cddg/5/dam-da.png">
-<script>window.APP_CONFIG = {"author": {"name": "Phòng màu mè Dê1", "watermark_template": "Chụp tại {author}"}, "site": {"title": "{author}", "description": "Nơi lưu trữ DNA màu sắc từ các sân khấu trình diễn.", "home": {"hero_label": "Chào mừng bạn đến với", "slogan": "Cứ mỗi chương trình ra lò là mình lại đem đi \"ép\" lấy DNA màu để cất vào đây. Tuy kho hàng hiện tại còn hơi ít mẫu dùng thử, nhưng tin mình đi, sẽ có ngày căn phòng này đầy ắp màu sắc cho bạn nhìn hoa mắt thì thôi!"}, "visual_dna_label": "DNA của", "title_template": "{title} - Stage DNA | {author}", "song_desc_template": "{visual_dna_label} {title} tại {scope}."}, "ui": {"share": {"scale": 2, "canvas_bg": "#000000", "download_filename_prefix": "dna-{stage}", "error_message": "Trình duyệt không hỗ trợ chia sẻ trực tiếp. Hãy tải ảnh về máy!", "native_share_title": "DNA của {stageTitle}", "native_share_text": "Xem thử cái này coi!"}}, "scopes": {"default": {"gallery_title_prefix": "Bộ sưu tập DNA của", "slogan": "Bộ sưu tập dải màu theo từng vòng công diễn.", "rounds": {"default": "Round {n}"}}, "ycc": {"slogan": "Chúng mình đoàn viên thôi", "rounds": {"0": "Toàn cảnh", "1": "Tiết mục lẻ", "default": "Chương {n}"}, "palette": ["#fcf8e8", "#f2e0a1", "#d9b26a", "#a67c52"]}, "tbtn": {"slogan": "Là ngàn muôn ánh sáng hoà vào nhau rực rỡ shine my dream", "rounds": {"0": "Project 100%", "6": "Chung kết", "default": "Công diễn {n}"}, "palette": ["#2d0a02", "#c8521b", "#fbae5b", "#f3efef"]}, "atvncg": {"slogan": "Vươn đôi tay để cho đam mê bốc cháy dưới ánh Mặt Trời", "rounds": {"0": "Vòng Concert", "6": "Chung kết", "default": "Công diễn {n}"}, "palette": ["#6c1f4e", "#c75633", "#d9a04a", "#2f1b4c"]}, "cddg": {"slogan": "Màn đêm buông là lúc ánh sáng trong ta rực rỡ", "rounds": {"0": "Vòng solo", "6": "Chung kết", "default": "Công diễn {n}"}, "palette": ["#33d6d0", "#a4f2f0", "#d4b48d", "#f4978e"]}, "cddgrs": {"slogan": "Hãy bước về phía có bình minh đầy nắng", "rounds": {"0": "Vòng solo", "6": "Chung kết", "default": "Công diễn {n}"}, "palette": ["#6c2e9c", "#d81e5b", "#f4a261", "#1b4965"]}}};</script>
+<script>window.APP_CONFIG = {"author": {"name": "Phòng màu mè Dê1", "watermark_template": "Chụp tại {author}"}, "site": {"title": "{author}", "description": "Nơi lưu trữ DNA màu sắc từ các sân khấu trình diễn.", "home": {"hero_label": "Chào mừng bạn đến với", "slogan": "Cứ mỗi chương trình ra lò là mình lại đem đi \"ép\" lấy DNA màu để cất vào đây. Tuy kho hàng hiện tại còn hơi ít mẫu dùng thử, nhưng tin mình đi, sẽ có ngày căn phòng này đầy ắp màu sắc cho bạn nhìn hoa mắt thì thôi!"}, "404": {"title": "Trống trơn", "description": "Không tìm thấy DNA bạn yêu cầu.", "slogan": "Ôi không! DNA đã bị thất lạc, chắc hẳn nó đã bị rơi xuống ao trong quá trình vận chuyển rồi. Bạn thông cảm nhé!", "callback": "Quay về phòng màu mè"}, "visual_dna_label": "DNA của", "title_template": "{title} - Stage DNA | {author}", "song_desc_template": "{visual_dna_label} {title} tại {scope}."}, "ui": {"share": {"scale": 2, "canvas_bg": "#000000", "download_filename_prefix": "dna-{stage}", "error_message": "Trình duyệt không hỗ trợ chia sẻ trực tiếp. Hãy tải ảnh về máy!", "native_share_title": "DNA của {stageTitle}", "native_share_text": "Xem thử cái này coi!"}}};</script>
 </head>
 
 <body class="bg-main">
 	<div id="app"></div>
 
 	<!-- UI Templates Injected Dynamically by SSG -->
-	<template id="tpl-card">
+	<template id="tpl-404">
+	<div class="error-page">
+		<style>
+			.error-page, .error-page .home-hero-vibrant {
+				height: 100vh;
+				min-height: 100vh;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				margin: 0;
+				overflow: hidden;
+				background: #000 !important;
+			}
+			.error-page .hero-content {
+				padding-bottom: 0;
+			}
+		</style>
+		<section class="home-hero-vibrant">
+			<div class="hero-visuals">
+				<canvas id="hero-canvas"></canvas>
+			</div>
+			<div class="hero-content">
+				<h1 id="error-404-title"></h1>
+				<p id="error-404-slogan"></p>
+				<div style="margin-top: 4rem;">
+					<a href="./" class="nav-links" style="display: inline-block; text-decoration: none;">
+						<span id="error-404-callback" style="background: #fff; color: #000; padding: 14px 28px; border-radius: 8px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: all 0.3s ease;"></span>
+					</a>
+				</div>
+			</div>
+		</section>
+	</div>
+</template>
+
+
+<template id="tpl-card">
 	<a class="card glass">
 		<canvas class="card-bg"></canvas>
 		<div class="card-header">
@@ -104,7 +139,7 @@
 	<div class="container">
 		<div class="hero">
 			<h1 id="gallery-title"></h1>
-			<p>Cứ mỗi chương trình ra lò là mình lại đem đi "ép" lấy DNA màu để cất vào đây. Tuy kho hàng hiện tại còn hơi ít mẫu dùng thử, nhưng tin mình đi, sẽ có ngày căn phòng này đầy ắp màu sắc cho bạn nhìn hoa mắt thì thôi!</p>
+			<p>Bộ sưu tập dải màu theo từng vòng công diễn.</p>
 		</div>
 		<div id="gallery-content"></div>
 	</div>

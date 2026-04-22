@@ -414,8 +414,10 @@ async function captureAndProcess(scope, round, item, absoluteRootUrl, colorCache
 }
 class App {
     db = null;
+    scopes = {};
     currentScope = null;
     currentSongId = null;
+    is404 = false;
     colorCache = new Map();
     captureCache = new Map();
     pendingCaptures = new Map();
@@ -461,8 +463,13 @@ class App {
         const cfg = window.APP_CONFIG || {};
         try {
             const dataName = cfg.paths?.output_data || "data.json";
-            const res = await fetch(`${this.absoluteRootUrl}${dataName}`);
-            this.db = await res.json();
+            const scopesName = cfg.paths?.scopes_data || "scopes.json";
+            const [dataRes, scopesRes] = await Promise.all([
+                fetch(`${this.absoluteRootUrl}${dataName}`),
+                fetch(`${this.absoluteRootUrl}${scopesName}`)
+            ]);
+            this.db = await dataRes.json();
+            this.scopes = await scopesRes.json();
             this.parseRoute();
             this.render();
             window.onpopstate = ()=>{
@@ -484,6 +491,7 @@ class App {
         const parts = path.split('/').filter((p)=>p !== "" && p !== "index.html");
         this.currentScope = null;
         this.currentSongId = null;
+        this.is404 = false;
         if (parts.length > 0) {
             if (this.db && this.db[parts[0]]) {
                 this.currentScope = parts[0];
@@ -491,6 +499,8 @@ class App {
             } else if (parts.length > 1 && this.db && this.db[parts[1]]) {
                 this.currentScope = parts[1];
                 if (parts.length > 2) this.currentSongId = parts[2];
+            } else {
+                this.is404 = true;
             }
         }
     }
@@ -514,8 +524,7 @@ class App {
         return result;
     }
     getScopeConfig(scope) {
-        const cfg = window.APP_CONFIG || {};
-        const scopes = cfg.scopes || {};
+        const scopes = this.scopes || {};
         const defaultScope = scopes.default || {};
         const currentScope = scopes[scope] || {};
         return {
@@ -565,7 +574,9 @@ class App {
         appDiv.innerHTML = '';
         this.animators.clear();
         this.currentCards = [];
-        if (this.currentSongId && this.currentScope) {
+        if (this.is404) {
+            this.render404(appDiv);
+        } else if (this.currentSongId && this.currentScope) {
             this.renderDetail(appDiv, this.currentScope, this.currentSongId);
         } else if (this.currentScope) {
             this.renderGallery(appDiv, this.currentScope);
@@ -579,6 +590,12 @@ class App {
         const homeTitle = this.resolveTemplate(cfg.site?.title || "");
         document.title = homeTitle;
         const view = getTemplate('tpl-home');
+        const h1 = view.querySelector('h1');
+        if (h1) {
+            const siteTitle = cfg.site?.title || "{author}";
+            const authorName = cfg.author?.name || "DNA";
+            h1.textContent = siteTitle.replace('{author}', authorName);
+        }
         const canvas = view.querySelector('#hero-canvas');
         const heroSection = view.querySelector('.home-hero-vibrant');
         const brandColors = [
@@ -643,6 +660,43 @@ class App {
         container.appendChild(view);
         this.currentCards = Array.from(document.querySelectorAll('.scope-row'));
     }
+    render404(container) {
+        const cfg = window.APP_CONFIG || {};
+        const s404 = cfg.site?.["404"] || {};
+        const authorName = cfg.author?.name || "";
+        const cleanTitle = s404.title || "404 Not Found";
+        document.title = `${cleanTitle} | ${authorName}`;
+        const view = getTemplate('tpl-404');
+        const canvas = view.querySelector('#hero-canvas');
+        const heroSection = view.querySelector('.home-hero-vibrant');
+        const brandColors = [
+            '#ffffff',
+            '#9ca3af',
+            '#4b5563',
+            '#1f2937'
+        ];
+        const brandBase = '#000000';
+        if (isLowPower) {
+            heroSection.classList.add('home-hero-static-gradient');
+            canvas?.remove();
+        } else if (canvas) {
+            const animator = new CardAnimator(canvas, brandColors, brandBase);
+            this.animators.add(animator);
+            heroSection.animator = animator;
+        }
+        view.querySelector('#error-404-title').textContent = cleanTitle;
+        view.querySelector('#error-404-slogan').textContent = s404.slogan || "Page not found.";
+        view.querySelector('#error-404-callback').textContent = s404.callback || "Go Home";
+        const callbackLink = view.querySelector('a');
+        callbackLink.href = this.absoluteRootUrl;
+        callbackLink.onclick = (e)=>{
+            e.preventDefault();
+            window.history.pushState({}, '', this.absoluteRootUrl);
+            this.parseRoute();
+            this.render();
+        };
+        container.appendChild(view);
+    }
     async renderGallery(container, scope) {
         document.title = this.getCleanTitle(scope);
         const view = getTemplate('tpl-gallery');
@@ -652,10 +706,18 @@ class App {
         if (sloganEl) sloganEl.textContent = sCfg.slogan || "";
         const content = view.querySelector('#gallery-content');
         const scopeData = this.db[scope];
+        const visibleRounds = scopeData.filter((r)=>r && r.length > 0);
+        const totalVisibleRounds = visibleRounds.length;
         scopeData.forEach((items, roundIndex)=>{
             if (!items || items.length === 0) return;
             const roundView = getTemplate('tpl-round');
-            roundView.querySelector('.round-name').textContent = this.getRoundName(scope, roundIndex);
+            const roundHeaderEl = roundView.querySelector('.round-header');
+            if (totalVisibleRounds === 1 || items.length === 1) {
+                roundHeaderEl.style.display = 'none';
+            } else {
+                const roundNameEl = roundView.querySelector('.round-name');
+                roundNameEl.textContent = this.getRoundName(scope, roundIndex);
+            }
             const grid = roundView.querySelector('.gallery-grid');
             items.forEach((item)=>{
                 const card = getTemplate('tpl-card');
@@ -712,6 +774,7 @@ class App {
         const cfg = window.APP_CONFIG || {};
         const scopeData = this.db[scope];
         let item = null, roundIndex = -1;
+        scopeData.filter((r)=>r && r.length > 0).length;
         for(let r = 0; r < scopeData.length; r++){
             const match = scopeData[r].find((i)=>i.id === songId);
             if (match) {
